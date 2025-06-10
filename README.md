@@ -131,27 +131,17 @@ The application will be available at `http://localhost:3000` with the backend AP
 
 ```
 DRGNN/
-├── Drug_Explorer/
-│   ├── drug_server/           # Flask backend application
-│   │   ├── application.py     # Main server file
-│   │   ├── models/           # GNN model implementations
-│   │   ├── api/              # API endpoints
-│   │   └── utils/            # Utility functions
-│   └── drug_explorer/        # React frontend application
-│       ├── src/
-│       │   ├── components/   # React components
-│       │   ├── pages/        # Application pages
-│       │   ├── api/          # API integration
-│       │   └── utils/        # Frontend utilities
-│       ├── public/           # Static assets
-│       └── package.json      # Frontend dependencies
-├── data/                     # Dataset files and preprocessing
-├── models/                   # Trained model files
-├── notebooks/               # Jupyter notebooks for analysis
-├── results/                 # Experimental results and evaluations
-├── docs/                    # Documentation files
-├── requirements.txt         # Python dependencies
-└── README.md               # This file
+├── API/                   # Flask backend application for serving the model via REST API
+│   └── ...                # Contains application logic, routes, config, database access, etc.
+
+├── DRGNN utils/           # Core utilities and model data
+│   └── ...                # GNN models, preprocessing scripts, configuration, etc.
+
+├── Notebooks/             # Jupyter notebooks for experiments, analysis, or demos
+│   └── ...                # Interactive exploration and testing of model behavior
+
+├── README.md              # Project overview, setup, and usage documentation
+
 ```
 
 ## 🧠 Model Architecture

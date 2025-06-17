@@ -32,7 +32,7 @@ The DRGNN platform consists of three main components:
 - **Interactive Drug Search**: Real-time search and ranking of drug candidates
 - **RESTful Endpoints**: Comprehensive API for predictions and explanations
 - **Confidence Metrics**: Statistical validation scores and pathway analysis
-- **Performance**: 92% AUC-ROC, 1,200+ drug entities, 5,000+ disease targets
+- **Performance**: 0.8744% AUC-ROC, 1,200+ drug entities, 5,000+ disease targets
   
 ![image](https://github.com/user-attachments/assets/aa495c05-63b5-41d6-bb07-a26ea7643aed)
 
@@ -48,7 +48,7 @@ The DRGNN platform consists of three main components:
 - **Complete Pipeline**: From PrimeKG dataset to API decision output
 - **Two-Stage Training**: Pre-training on full graph → Fine-tuning for drug-disease predictions
 - **Interpretable Pathways**: Disease → Gene → Drug meta-path explanations
-- **Performance Metrics**: 92% AUROC, 80% AUPRC, 85% Precision@10
+- **Performance Metrics**: 0.8744% AUROC, 0.8496% AUPRC
   
 ![DRGNN Framework](https://github.com/user-attachments/assets/c39baeba-24ac-4fb5-87c9-f255062d34fb)
 

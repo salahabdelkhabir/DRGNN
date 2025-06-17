@@ -131,7 +131,7 @@ The DRGNN platform consists of three main architectural components:
 - **Interpretable Pathways**: Disease → Gene → Drug meta-path explanations
 - **Performance Metrics**: 0.8744% AUROC, 0.8496% AUPRC
 
-![DRGNN Framework](https://github.com/user-attachments/assets/c39baeba-24ac-4fb5-87c9-f255062d04fb)
+![DRGNN Framework](https://github.com/user-attachments/assets/a2b0d5eb-95cf-47cc-9e25-f4fa04b762de)
 
 ---
 

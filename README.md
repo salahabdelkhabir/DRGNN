@@ -320,15 +320,7 @@ print(f"Confidence score: {explanation['confidence']}")
 Average: 0.8744 ± 0.0135
 ```
 
-### 🔬 **Ablation Studies**
 
-| Component | AUC-ROC | Impact |
-|-----------|---------|---------|
-| **Full Model** | **0.8744** | **Baseline** |
-| w/o Attention | 0.8523 | -2.21% |
-| w/o GraphMask | 0.8612 | -1.32% |
-| w/o Meta-paths | 0.8456 | -2.88% |
-| w/o Pre-training | 0.8389 | -3.55% |
 
 ---
 
@@ -427,8 +419,6 @@ Get platform statistics
 - **PrimeKG**: Biomedical knowledge graph
 - **JSON/CSV**: Data exchange formats
 - **RESTful API**: Service architecture
-- **Docker**: Containerization (optional)
-
 ---
 
 ## 📚 Documentation

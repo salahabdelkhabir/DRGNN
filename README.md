@@ -96,10 +96,10 @@ DRGNN leverages advanced Graph Neural Networks with interpretable AI to:
 |--------|--------|-------------|
 | **AUC-ROC** | **87.44%** | Area Under ROC Curve |
 | **AUPRC** | **84.96%** | Area Under Precision-Recall Curve |
-| **Drug Entities** | **1,200+** | Unique drugs in the system |
+| **Drug Entities** | **7,900+** | Unique drugs in the system |
 | **Disease Targets** | **5,000+** | Disease conditions covered |
 | **Total Diseases** | **17,080** | Diseases in PrimeKG dataset |
-| **Relationships** | **4M+** | Biomedical relationships processed |
+| **Relationships** | **8M+** | Biomedical relationships processed |
 
 </div>
 
@@ -152,7 +152,7 @@ The DRGNN platform consists of three main architectural components:
 
 **Dataset Statistics:**
 - **17,080 diseases** with comprehensive annotations
-- **4M+ relationships** across multiple biological domains
+- **8M+ relationships** across multiple biological domains
 - **Multiple entity types**: Drugs, genes, proteins, diseases, phenotypes
 - **High-quality curation** from trusted biomedical sources
 

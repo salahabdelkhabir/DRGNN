@@ -421,21 +421,12 @@ Get platform statistics
 - **RESTful API**: Service architecture
 ---
 
-## 📚 Documentation
-
-### 📖 **Additional Resources**
-
-- **[Model Architecture Guide](docs/architecture.md)**: Detailed technical specifications
-- **[API Reference](docs/api_reference.md)**: Complete endpoint documentation
-- **[Data Processing Pipeline](docs/data_pipeline.md)**: Data preparation and preprocessing
-- **[Evaluation Methodology](docs/evaluation.md)**: Performance assessment techniques
-- **[Deployment Guide](docs/deployment.md)**: Production deployment instructions
-
-### 🔬 **Research Papers & References**
+## 📚 Research Papers & References
 
 1. **PrimeKG Dataset**: [Nature Scientific Data](https://www.nature.com/articles/s41597-023-01960-3)
-2. **Graph Neural Networks for Drug Discovery**: Relevant literature and methodologies
-3. **Interpretable AI in Healthcare**: Explainability frameworks and applications
+2. **Reference Approach**: [A foundation model for clinician-centered drug repurposing](https://www.nature.com/articles/s41591-024-03233-x)
+3. **Graph Neural Networks for Drug Discovery**: [Relevant literature and methodologies](https://medium.com/@mulugetas/drug-discovery-and-graph-neural-networks-gnns-a-regression-example-fc738e0f11f3)
+4. **Interpretable AI in Healthcare**: [XAI](https://ieeexplore.ieee.org/document/9916585)
 
 ---
 

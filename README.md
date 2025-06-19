@@ -28,7 +28,7 @@
 - [🧪 Model Performance](#-model-performance)
 - [🎯 API Endpoints](#-api-endpoints)
 - [🔧 Technical Stack](#-technical-stack)
-- [📚 Documentation](#-documentation)
+- [📚 Research Papers & References](#-research-papers--references)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
 - [🙏 Acknowledgments](#-acknowledgments)

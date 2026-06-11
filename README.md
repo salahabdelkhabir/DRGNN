@@ -105,19 +105,45 @@ DRGNN leverages advanced Graph Neural Networks with interpretable AI to:
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Project Structure
 
-The DRGNN platform consists of three main architectural components:
-
-### 1. 🔧 **DRGNN API**
-- **Interactive Drug Search**: Real-time search and ranking of drug candidates
-- **RESTful Endpoints**: Comprehensive API for predictions and explanations
-- **Confidence Metrics**: Statistical validation scores and pathway analysis
-- **Performance**: 0.8744% AUC-ROC, 1,200+ drug entities, 5,000+ disease targets
+```
+drgnn/
+├── drgnn/                  # Core Python package (pip-installable)
+│   ├── __init__.py         # Package exports (DRGNN, DataControl)
+│   ├── model.py            # DRGNN model class + HeteroRGCN
+│   ├── data.py             # DataControl for data loading/splitting
+│   ├── train.py            # Training pipeline utilities
+│   ├── predict.py          # Prediction utilities
+│   └── utils/              # Utility modules
+│       ├── data_utils.py   # Data processing, evaluation, graph utils
+│       ├── model_utils.py  # Model save/load, optimizer helpers
+│       ├── graph_utils.py  # Graph creation and visualization
+│       └── config.py       # Path configuration
+├── API/                    # Web interface (fork of Drug_Explorer)
+│   ├── drug_server/        # Flask backend API
+│   └── src/                # React/TypeScript frontend
+├── Notebooks/              # Jupyter notebooks (EDA, training, analysis)
+├── Documentation/          # Thesis PDF, presentation, project rollup
+├── DRGNN utils/            # Original utility scripts
+├── tests/                  # Unit tests
+├── scripts/                # Utility scripts (data setup, etc.)
+├── requirements.txt        # Python dependencies
+├── setup.py                # Package installation config
+├── pyproject.toml           # Build system config
+└── LICENSE                 # MIT License
+```
 
 ![DRGNN API](https://github.com/user-attachments/assets/aa495c05-63b5-41d6-bb07-a26ea7643aed)
 
-### 2. 🧠 **DRGNN Architecture**
+### 🔧 **DRGNN API (Fork)**
+- **Interactive Drug Search**: Real-time search and ranking of drug candidates
+- **RESTful Endpoints**: Comprehensive API for predictions and explanations
+- **Confidence Metrics**: Statistical validation scores and pathway analysis
+- **Performance**: 87.44% AUC-ROC, 7,900+ drug entities, 5,000+ disease targets
+- *Note: The API frontend is adapted from [Drug_Explorer](https://github.com/wangqianwen0418/Drug_Explorer)*
+
+### 🧠 **DRGNN Architecture**
 - **Multi-layered Design**: User Interface, API & Business Logic, AI/ML Model, and Data layers
 - **Heterogeneous GNN**: Advanced graph neural network with attention mechanisms
 - **GraphMask Explainer**: Post-hoc explanations and biological pathway extraction
@@ -125,11 +151,11 @@ The DRGNN platform consists of three main architectural components:
 
 ![DRGNN Architecture](https://github.com/user-attachments/assets/accb7cf3-6190-43b8-b56b-78b13d2329fb)
 
-### 3. ⚙️ **DRGNN Framework**
+### ⚙️ **DRGNN Framework**
 - **Complete Pipeline**: From PrimeKG dataset to API decision output
 - **Two-Stage Training**: Pre-training on full graph → Fine-tuning for drug-disease predictions
 - **Interpretable Pathways**: Disease → Gene → Drug meta-path explanations
-- **Performance Metrics**: 0.8744% AUROC, 0.8496% AUPRC
+- **Performance Metrics**: 87.44% AUROC, 84.96% AUPRC
 
 ![DRGNN Framework](https://github.com/user-attachments/assets/a2b0d5eb-95cf-47cc-9e25-f4fa04b762de)
 
@@ -179,7 +205,7 @@ Node.js 16+
 Git
 ```
 
-### 🔧 Backend Setup
+### 🐍 Python Package Setup
 
 1. **Clone the repository**
 ```bash
@@ -193,15 +219,16 @@ python -m venv drgnn_env
 source drgnn_env/bin/activate  # On Windows: drgnn_env\Scripts\activate
 ```
 
-3. **Install Python dependencies**
+3. **Install the package and dependencies**
 ```bash
-pip install -r requirements.txt
+pip install -e .            # Install drgnn package in editable mode
+pip install -r requirements.txt  # Ensure all dependencies
 ```
 
 **Core Dependencies:**
 ```txt
 torch>=1.9.0
-torch-geometric>=2.0.0
+dgl>=0.8.0
 numpy>=1.21.0
 pandas>=1.3.0
 scikit-learn>=1.0.0
@@ -212,7 +239,7 @@ flask-cors>=3.0.0
 
 4. **Download and setup data**
 ```bash
-python setup_data.py
+python scripts/setup_data.py
 ```
 
 ### ⚛️ Frontend Setup
@@ -234,14 +261,31 @@ npm start
 
 ### 🏃‍♂️ Running the Application
 
-1. **Start the backend API**
-```bash
-python app.py
+1. **Using the DRGNN package**
+```python
+from drgnn import DRGNN
+from drgnn.data import DataControl
+
+# Load preprocessed data
+data = DataControl(data_folder='path/to/data')
+data.load_preprocessed('path/to/data')
+
+# Initialize and train model
+model = DRGNN(data=data, device='cuda:0')
+model.model_initialize()
+model.pretrain(n_epoch=2)
+model.finetune(n_epoch=500)
+model.save_model('./drgnn_model')
 ```
 
-2. **Start the frontend (in another terminal)**
+2. **Start the backend API**
 ```bash
-cd frontend && npm start
+cd API && python drug_server/application.py
+```
+
+3. **Start the frontend (in another terminal)**
+```bash
+cd API && npm start
 ```
 
 3. **Access the application**
@@ -253,39 +297,51 @@ cd frontend && npm start
 
 ## 💻 Usage
 
-### 🔍 **Drug Search and Prediction**
+### 🐍 **Using the DRGNN Package**
+
+```python
+from drgnn import DRGNN
+from drgnn.data import DataControl
+
+data = DataControl(data_folder='data/primekg')
+data.load_preprocessed('data/primekg')
+
+model = DRGNN(data=data, device='cuda:0')
+model.load_pretrained('models/drgnn_finetuned')
+
+predictions = model.predict(data.df_test)
+```
+
+### 🌐 **REST API (for web interface)**
 
 ```python
 import requests
 
 # Search for drug repurposing candidates
 response = requests.get(
-    'http://localhost:5000/api/predict',
+    'http://localhost:8002/api/drug_predictions',
     params={
-        'disease': 'Alzheimer disease',
-        'top_k': 10
+        'disease_id': '1687.0',
+        'top_n': 10
     }
 )
 
 predictions = response.json()
-print(f"Top drug candidates: {predictions['drugs']}")
 ```
 
 ### 📊 **Getting Explanations**
 
 ```python
-# Get interpretable explanations for predictions
+# Get interpretable explanations via the API
 response = requests.get(
-    'http://localhost:5000/api/explain',
+    'http://localhost:8002/api/attention_pair',
     params={
-        'drug': 'Aspirin',
-        'disease': 'Cardiovascular disease'
+        'disease': '1687.0',
+        'drug': '6809.0'
     }
 )
 
 explanation = response.json()
-print(f"Biological pathway: {explanation['pathway']}")
-print(f"Confidence score: {explanation['confidence']}")
 ```
 
 ### 🌐 **Web Interface Usage**
@@ -326,67 +382,42 @@ Average: 0.8744 ± 0.0135
 
 ## 🎯 API Endpoints
 
-### 🔍 **Prediction Endpoints**
-
-#### `GET /api/predict`
-Predict drug-disease associations
-
-**Parameters:**
-- `disease` (string): Disease name or ID
-- `top_k` (int): Number of top predictions to return
-- `threshold` (float): Confidence threshold (default: 0.5)
-
-**Response:**
-```json
-{
-  "disease": "Alzheimer disease",
-  "predictions": [
-    {
-      "drug": "Donepezil",
-      "confidence": 0.8923,
-      "rank": 1
-    },
-    {
-      "drug": "Memantine",
-      "confidence": 0.8756,
-      "rank": 2
-    }
-  ],
-  "total_candidates": 1247
-}
-```
-
-#### `GET /api/explain`
-Get interpretable explanations for predictions
-
-**Parameters:**
-- `drug` (string): Drug name or ID
-- `disease` (string): Disease name or ID
-
-**Response:**
-```json
-{
-  "drug": "Aspirin",
-  "disease": "Cardiovascular disease",
-  "confidence": 0.8654,
-  "pathway": [
-    "Cardiovascular disease → COX2 → Aspirin",
-    "Cardiovascular disease → PTGS1 → Aspirin"
-  ],
-  "explanation": "Aspirin inhibits COX enzymes, reducing inflammation..."
-}
-```
-
-### 📊 **Data Endpoints**
-
-#### `GET /api/drugs`
-List all available drugs
+### 🔍 **API Endpoints**
 
 #### `GET /api/diseases`
-List all available diseases
+List all available disease IDs with treatment flags
 
-#### `GET /api/stats`
-Get platform statistics
+#### `GET /api/drug_predictions`
+Get predicted drugs for a disease
+
+**Parameters:**
+- `disease_id` (string): Disease ID
+- `top_n` (int, optional): Number of top predictions (default: 200)
+
+**Response:**
+```json
+{
+  "predictions": [
+    {"score": 0.8923, "id": "6809.0", "known": true},
+    {"score": 0.8756, "id": "6810.0", "known": false}
+  ],
+  "metapath_summary": [...]
+}
+```
+
+#### `GET /api/attention`
+Get attention tree for a disease or drug node
+
+**Parameters:**
+- `disease` (string): Disease node ID
+- `drug` (string): Drug node ID
+
+#### `GET /api/attention_pair`
+Get attention paths connecting disease and drug
+
+**Parameters:**
+- `disease` (string): Disease node ID
+- `drug` (string): Drug node ID
 
 ---
 
@@ -511,6 +542,7 @@ copies or substantial portions of the Software.
 - **Open Source Community**: For essential libraries and frameworks
 - **PyTorch Geometric Team**: For excellent graph neural network tools
 - **Scientific Community**: For advancing interpretable AI in healthcare
+- [Qianwen Wang](https://github.com/wangqianwen0418) — Original [Drug_Explorer](https://github.com/wangqianwen0418/Drug_Explorer) project used as the web interface frontend
 
 ---
 

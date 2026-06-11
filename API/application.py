@@ -1,4 +1,6 @@
-from server.app import start_server
+import sys
+import os
 
-if __name__ == "__main__":
-    start_server()
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'drug_server'))
+
+from drug_server.application import create_app, application as app
